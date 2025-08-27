@@ -9,23 +9,31 @@ public class MyGuiScreen extends Screen {
 
     private boolean showCategoryA = false;
 
-    protected MyGuiScreen() {
+    public MyGuiScreen() {
         super(Component.literal("作弊功能"));
     }
 
     @Override
     protected void init() {
-        // 功能分類
-        this.addRenderableWidget(new Button(this.width / 2 - 50, this.height / 2 - 20, 100, 20, Component.literal("分類 A"), button -> {
+        int centerX = this.width / 2;
+        int centerY = this.height / 2;
+        int buttonWidth = 100;
+        int buttonHeight = 20;
+        int spacing = 5;
+
+        int currentY = centerY - 20; // 按鈕起始 Y 座標
+
+        // 分類(戰鬥類型)按鈕
+        this.addRenderableWidget(new Button(centerX - buttonWidth / 2, currentY, buttonWidth, buttonHeight, Component.literal("戰鬥類"), button -> {
             showCategoryA = !showCategoryA;
-            this.init(); // 重新初始化按鈕
         }));
 
-        // 功能 kill aura按鈕，只有在分類 展開時才顯示
+        currentY += buttonHeight + spacing;
+
+        // kill aura 按鈕（僅在分類 A 展開時顯示）
         if (showCategoryA) {
-            this.addRenderableWidget(new Button(this.width / 2 - 50, this.height / 2 + 10, 100, 20, Component.literal("kill aura++"), button -> {
-                // 點擊功能 執行 killaura 裡的邏輯
-                kill_aura_pro.execute();
+            this.addRenderableWidget(new Button(centerX - buttonWidth / 2, currentY, buttonWidth, buttonHeight, Component.literal("kill aura++"), button -> {
+                kill_aura_pro.execute(); // 呼叫同資料夾 kill_aura_pro 的靜態方法
             }));
         }
     }
